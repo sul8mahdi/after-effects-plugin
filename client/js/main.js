@@ -18,38 +18,24 @@
   var lastReport = null;
 
   // ---- locale loading ----
-  // Under CEP the page is served from file://, where relative fetch() fails
-  // silently and the whole UI renders blank. We load via XMLHttpRequest from
-  // an ABSOLUTE file:// URL built from the extension root (encodeURI handles
-  // the space in ".../Application Support/..."). In a plain browser (preview)
-  // we fall back to a relative fetch over http.
-  function loadLocale(code) {
-    if (!IMPBridge.isCEP) {
-      return fetch('./locale/' + code + '.json').then(function (r) { return r.json(); });
+  // Locales are embedded as a plain <script> (window.IMPLocales) so there is
+  // ZERO file I/O — under CEP the page runs from file://, where fetch()/XHR of
+  // local JSON is unreliable and left the panel blank. locales.js is generated
+  // from ar.json / en.json by tools/build-locales.js (a test keeps them in
+  // sync). A relative fetch remains only as a last-resort browser fallback.
+  function loadLocales() {
+    if (window.IMPLocales && window.IMPLocales.ar && window.IMPLocales.en) {
+      return Promise.resolve({ ar: window.IMPLocales.ar, en: window.IMPLocales.en });
     }
-    return new Promise(function (resolve, reject) {
-      var root = String(IMPBridge.extensionRoot || '').replace(/\\/g, '/');
-      var url = encodeURI('file://' + root + '/client/locale/' + code + '.json');
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', url, true);
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState !== 4) { return; }
-        // file:// success reports status 0 in CEF, 200 over http
-        if (xhr.status === 200 || xhr.status === 0) {
-          try { resolve(JSON.parse(xhr.responseText)); }
-          catch (e) { reject('parse ' + code + ' (' + url + '): ' + e); }
-        } else {
-          reject('HTTP ' + xhr.status + ' for ' + url);
-        }
-      };
-      xhr.onerror = function () { reject('XHR error for ' + url); };
-      xhr.send(null);
-    });
+    return Promise.all([
+      fetch('./locale/ar.json').then(function (r) { return r.json(); }),
+      fetch('./locale/en.json').then(function (r) { return r.json(); })
+    ]).then(function (res) { return { ar: res[0], en: res[1] }; });
   }
 
   function boot() {
-    Promise.all([loadLocale('ar'), loadLocale('en')]).then(function (res) {
-      i18n.setLocales({ ar: res[0], en: res[1] });
+    loadLocales().then(function (locales) {
+      i18n.setLocales(locales);
       // Optional deep-link for preview/testing: ?lang=en&analyze=1
       var params = new URLSearchParams(window.location.search);
       i18n.setLang(params.get('lang') === 'en' ? 'en' : 'ar');
