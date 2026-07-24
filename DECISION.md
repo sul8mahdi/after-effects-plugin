@@ -1,4 +1,4 @@
-# القرار التقني — Icon Motion Pro
+# القرار التقني — Icon M Pro
 
 > Technical Decision Record. آخر تحديث: 2026-07-24.
 

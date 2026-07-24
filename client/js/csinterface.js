@@ -2,7 +2,7 @@
  * csinterface.js — minimal CSInterface shim.
  *
  * The full official Adobe CSInterface.js can be dropped in to replace this
- * without touching other code; we implement only the surface Icon Motion Pro
+ * without touching other code; we implement only the surface Icon M Pro
  * uses (evalScript, getSystemPath, host environment). Under CEP the runtime
  * injects window.__adobe_cep__; outside CEP (a plain browser) it is absent,
  * which bridge.js detects to enable mock mode.

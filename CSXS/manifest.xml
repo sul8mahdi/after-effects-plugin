@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  CEP manifest for Icon Motion Pro.
+  CEP manifest for Icon M Pro.
   HostList AEFT version range covers After Effects 2024 (24.x) .. future (99.9),
   which includes After Effects 2026 (26.x). CEP runtime 11.x ships with AE 2026.
 -->
 <ExtensionManifest Version="11.0"
                    ExtensionBundleId="com.iconmotion.pro"
                    ExtensionBundleVersion="0.1.0"
-                   ExtensionBundleName="Icon Motion Pro"
+                   ExtensionBundleName="Icon M Pro"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ExtensionList>
     <Extension Id="com.iconmotion.pro.panel" Version="0.1.0"/>
@@ -41,7 +41,7 @@
         </Lifecycle>
         <UI>
           <Type>Panel</Type>
-          <Menu>Icon Motion Pro</Menu>
+          <Menu>Icon M Pro</Menu>
           <Geometry>
             <Size>
               <Height>640</Height>

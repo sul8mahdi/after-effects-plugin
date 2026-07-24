@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# install-macos.sh — install Icon Motion Pro as an unsigned CEP extension
+# install-macos.sh — install Icon M Pro as an unsigned CEP extension
 # for development/testing on macOS.
 #
 # What it does:
@@ -8,7 +8,7 @@
 #   2. Symlinks this repo into the per-user CEP extensions folder.
 #
 # After running: restart After Effects, then open
-#   Window > Extensions > Icon Motion Pro
+#   Window > Extensions > Icon M Pro
 #
 # This does NOT sign or package the extension for distribution — that is a
 # later phase (ZXP signing). It is for testing on your own machine.
@@ -20,7 +20,7 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 EXT_DIR="$HOME/Library/Application Support/Adobe/CEP/extensions"
 LINK_PATH="$EXT_DIR/$BUNDLE_ID"
 
-echo "Icon Motion Pro — تثبيت تطويري على macOS"
+echo "Icon M Pro — تثبيت تطويري على macOS"
 echo "Repo: $REPO_ROOT"
 
 # 1) Enable debug mode for the CSXS versions AE 2024..2026 may use.
@@ -42,6 +42,6 @@ echo "✓ تم ربط الإضافة: $LINK_PATH -> $REPO_ROOT"
 echo
 echo "التالي:"
 echo "  1. أعد تشغيل After Effects 2026."
-echo "  2. Window > Extensions > Icon Motion Pro"
+echo "  2. Window > Extensions > Icon M Pro"
 echo
 echo "لإلغاء التثبيت: rm \"$LINK_PATH\""

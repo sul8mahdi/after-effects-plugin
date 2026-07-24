@@ -1,4 +1,4 @@
-# Icon Motion Pro
+# Icon M Pro
 
 إضافة مؤسسية لـ **Adobe After Effects 2026** لاستيراد الأيقونات الفيكتورية،
 فهم تكوينها، تعديل مظهرها، ثم تحريكها بجودة احترافية.
@@ -62,7 +62,7 @@ bash tools/install-macos.sh
 ثم:
 
 1. أعد تشغيل After Effects 2026.
-2. `Window > Extensions > Icon Motion Pro`.
+2. `Window > Extensions > Icon M Pro`.
 
 للإلغاء: احذف الرابط الرمزي المذكور في نهاية مخرجات السكربت.
 
