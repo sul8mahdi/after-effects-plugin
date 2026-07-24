@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Icon Motion Pro</title>
+  <link rel="stylesheet" href="./css/panel.css">
+  <link rel="stylesheet" href="./css/rtl.css">
+</head>
+<body class="rtl">
+  <header class="topbar">
+    <div class="brand">
+      <h1 id="appTitle">Icon Motion Pro</h1>
+      <p id="appTagline" class="tagline"></p>
+    </div>
+    <div class="topbar-actions">
+      <span id="phaseBadge" class="badge phase"></span>
+      <button id="langToggle" class="lang-toggle" type="button">English</button>
+    </div>
+  </header>
+
+  <span id="mockBadge" class="badge mock" style="display:none"></span>
+
+  <main class="content">
+    <section class="steps">
+      <div class="step" id="step1"></div>
+      <div class="step" id="step2"></div>
+      <div class="step" id="step3"></div>
+      <p class="hint" id="selectHint"></p>
+    </section>
+
+    <section class="actions">
+      <button id="btnAnalyze" class="btn primary" type="button"></button>
+      <button id="btnAnimate" class="btn" type="button" disabled title="Phase 3"></button>
+    </section>
+
+    <div id="errorBox" class="error-box" style="display:none">
+      <span class="msg"></span>
+    </div>
+
+    <section id="report" class="report"></section>
+
+    <p id="phaseNote" class="phase-note"></p>
+  </main>
+
+  <footer class="statusbar">
+    <span id="status" class="status"></span>
+    <button id="btnCopyLog" class="btn ghost small" type="button"></button>
+  </footer>
+
+  <script src="./js/csinterface.js"></script>
+  <script src="./js/i18n.js"></script>
+  <script src="./js/log.js"></script>
+  <script src="./js/bridge.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+</html>

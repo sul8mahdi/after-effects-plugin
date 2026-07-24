@@ -1,18 +1,19 @@
-// logger.jsx — inspection logger for the Icon Motion Engine.
+// logger.jsx — deep property inspector (developer tool, standalone).
 //
-// Run via File > Scripts > Run Script File with one or more layers selected
-// in the active comp. Walks each selected layer recursively and writes
-// matchName, display name, value type, current value, and keyframe times
-// to logs/inspect.txt at the repo root. Paste that file back to Claude
-// before any animator is written against an unfamiliar structure.
+// Run via File > Scripts > Run Script File with one or more layers selected.
+// Walks each selected layer recursively and writes matchName, display name,
+// value type, current value, and keyframe times to logs/inspect.txt.
+// The human runs it and pastes the output back so we can write animators
+// against a KNOWN structure instead of guessing (CLAUDE.md §6).
 //
-// Read-only: this script never mutates the project, so no undo group.
+// Read-only: never mutates the project, so no undo group. This file is NOT
+// included by host/index.jsx (its IIFE runs immediately and shows an alert).
 
 #include "utils.jsx"
 
 (function () {
 
-    // ---------- formatting helpers ----------
+    var U = IMP.util;
 
     function valueTypeName(p) {
         var t = p.propertyValueType;
@@ -32,78 +33,47 @@
 
     function formatValue(p) {
         var v;
-        try {
-            v = p.value;
-        } catch (e) {
-            return "<unreadable>";
-        }
-        if (v === null || typeof v === "undefined") {
-            return "<none>";
-        }
+        try { v = p.value; } catch (e) { return "<unreadable>"; }
+        if (v === null || typeof v === "undefined") { return "<none>"; }
         if (p.propertyValueType === PropertyValueType.SHAPE) {
-            var closed = "?";
-            var nVerts = "?";
+            var closed = "?", nVerts = "?";
             try { closed = String(v.closed); } catch (e1) {}
             try { nVerts = String(v.vertices.length); } catch (e2) {}
             return "Shape(vertices=" + nVerts + ", closed=" + closed + ")";
         }
-        if (IMUtils.isArray(v)) {
+        if (U.isArray(v)) {
             var parts = [];
-            for (var i = 0; i < v.length; i++) {
-                parts.push(IMUtils.fmtNum(v[i]));
-            }
+            for (var i = 0; i < v.length; i++) { parts.push(U.fmtNum(v[i])); }
             return "[" + parts.join(", ") + "]";
         }
-        if (typeof v === "number") {
-            return IMUtils.fmtNum(v);
-        }
-        if (typeof v === "object") {
-            return "<object>";
-        }
+        if (typeof v === "number") { return U.fmtNum(v); }
+        if (typeof v === "object") { return "<object>"; }
         return String(v);
     }
 
     function keyInfo(p, frameDuration) {
         var n = 0;
-        try {
-            n = p.numKeys;
-        } catch (e) {
-            return "";
-        }
-        if (n < 1) {
-            return "";
-        }
+        try { n = p.numKeys; } catch (e) { return ""; }
+        if (n < 1) { return ""; }
         var times = [];
-        // Keyframe indices are 1-based.
-        for (var k = 1; k <= n; k++) {
+        for (var k = 1; k <= n; k++) { // keyframe indices are 1-based
             var t = p.keyTime(k);
-            var frame = Math.round(t / frameDuration);
-            times.push(IMUtils.fmtNum(t) + "s(f" + frame + ")");
+            times.push(U.fmtNum(t) + "s(f" + Math.round(t / frameDuration) + ")");
         }
         return " | keys[" + n + "]: " + times.join(", ");
     }
 
-    // ---------- recursive walk ----------
-
     function walkGroup(group, depth, lines, frameDuration) {
-        var indent = IMUtils.repeat("  ", depth);
-        // Property indices are 1-based.
-        for (var i = 1; i <= group.numProperties; i++) {
+        var indent = U.repeat("  ", depth);
+        for (var i = 1; i <= group.numProperties; i++) { // 1-based
             var p;
-            try {
-                p = group.property(i);
-            } catch (e) {
-                lines.push(indent + "<error reading property " + i + ": " + e.toString() + ">");
-                continue;
-            }
+            try { p = group.property(i); }
+            catch (e) { lines.push(indent + "<error reading property " + i + ": " + e.toString() + ">"); continue; }
             if (p.propertyType === PropertyType.PROPERTY) {
-                lines.push(indent + p.matchName +
-                    " | \"" + p.name + "\"" +
-                    " | " + valueTypeName(p) +
-                    " | value=" + formatValue(p) +
+                lines.push(indent + p.matchName + " | \"" + p.name + "\" | " +
+                    valueTypeName(p) + " | value=" + formatValue(p) +
                     keyInfo(p, frameDuration));
             } else {
-                // INDEXED_GROUP or NAMED_GROUP
                 lines.push(indent + p.matchName + " | \"" + p.name + "\" {");
                 walkGroup(p, depth + 1, lines, frameDuration);
                 lines.push(indent + "}");
@@ -111,25 +81,19 @@
         }
     }
 
-    // ---------- output ----------
-
     function repoRoot() {
-        // This file lives at src/lib/logger.jsx — root is two folders up.
+        // host/lib/logger.jsx -> root is three folders up.
         return new File($.fileName).parent.parent.parent;
     }
 
     function writeLog(text) {
-        var root = repoRoot();
-        var folder = new Folder(root.fsName + "/logs");
-        if (!folder.exists) {
-            folder.create();
-        }
+        var folder = new Folder(repoRoot().fsName + "/logs");
+        if (!folder.exists) { folder.create(); }
         var f = new File(folder.fsName + "/inspect.txt");
         f.encoding = "UTF-8";
-        var ok = f.open("w");
-        if (!ok) {
+        if (!f.open("w")) {
             alert("Could not open log file for writing:\n" + f.fsName +
-                "\n\nLikely cause: enable Preferences > Scripting & Expressions >" +
+                "\n\nEnable Preferences > Scripting & Expressions >" +
                 "\n'Allow Scripts to Write Files and Access Network'.");
             return null;
         }
@@ -138,16 +102,12 @@
         return f.fsName;
     }
 
-    // ---------- main ----------
-
     var comp = app.project.activeItem;
     if (!(comp && comp instanceof CompItem)) {
         alert("Select a composition (open it and click in the timeline), then re-run.");
         return;
     }
-
-    // selectedLayers is a plain JS array — 0-based, unlike everything else in AE.
-    var sel = comp.selectedLayers;
+    var sel = comp.selectedLayers; // 0-based JS array
     if (sel.length < 1) {
         alert("Select at least one layer in \"" + comp.name + "\", then re-run.");
         return;
@@ -157,9 +117,9 @@
     lines.push("=== Icon Motion inspect ===");
     lines.push("AE version: " + app.version);
     lines.push("Comp: \"" + comp.name + "\" | " + comp.width + "x" + comp.height +
-        " | frameRate=" + IMUtils.fmtNum(comp.frameRate) +
-        " | frameDuration=" + IMUtils.fmtNum(comp.frameDuration) +
-        " | duration=" + IMUtils.fmtNum(comp.duration) + "s");
+        " | frameRate=" + U.fmtNum(comp.frameRate) +
+        " | frameDuration=" + U.fmtNum(comp.frameDuration) +
+        " | duration=" + U.fmtNum(comp.duration) + "s");
     lines.push("Selected layers: " + sel.length);
     lines.push("");
 
@@ -173,8 +133,8 @@
         else if (layer instanceof CameraLayer) { kind = "CameraLayer"; }
         else if (layer instanceof LightLayer) { kind = "LightLayer"; }
         lines.push("type=" + kind +
-            " | inPoint=" + IMUtils.fmtNum(layer.inPoint) + "s" +
-            " | outPoint=" + IMUtils.fmtNum(layer.outPoint) + "s" +
+            " | inPoint=" + U.fmtNum(layer.inPoint) + "s" +
+            " | outPoint=" + U.fmtNum(layer.outPoint) + "s" +
             " | motionBlur=" + layer.motionBlur);
         walkGroup(layer, 0, lines, comp.frameDuration);
         lines.push("");

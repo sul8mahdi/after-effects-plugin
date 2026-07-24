@@ -1,0 +1,18 @@
+/* rtl.css — right-to-left adjustments for Arabic (default language).
+   Most layout uses fl<ex/grid which mirror automatically with dir="rtl";
+   these rules fix the few cases that need explicit handling. */
+
+html[dir="rtl"] .tagline { direction: rtl; }
+
+/* Statistic cells: keep key on the start side, value on the end side.
+   flex handles mirroring; text alignment follows direction automatically. */
+html[dir="rtl"] .stat { text-align: right; }
+html[dir="ltr"] .stat { text-align: left; }
+
+/* Numbers and matchNames inside warnings stay LTR so codes read correctly. */
+.warn-line, .widths, .swatch { unicode-bidi: plaintext; }
+
+/* Latin brand title stays LTR even in RTL layout. */
+#appTitle { direction: ltr; }
+html[dir="rtl"] .brand { text-align: right; }
+html[dir="ltr"] .brand { text-align: left; }
