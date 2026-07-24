@@ -25,11 +25,14 @@
   function boot() {
     Promise.all([loadLocale('ar'), loadLocale('en')]).then(function (res) {
       i18n.setLocales({ ar: res[0], en: res[1] });
-      i18n.setLang('ar');
+      // Optional deep-link for preview/testing: ?lang=en&analyze=1
+      var params = new URLSearchParams(window.location.search);
+      i18n.setLang(params.get('lang') === 'en' ? 'en' : 'ar');
       applyLanguage();
       wireEvents();
       showMockBadgeIfNeeded();
       checkEngine();
+      if (params.get('analyze') === '1') { onAnalyze(); }
     }).catch(function (e) {
       document.getElementById('status').textContent = 'Locale load failed: ' + e;
     });

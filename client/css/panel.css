@@ -25,6 +25,7 @@ html, body {
   font-family: "Segoe UI", "Helvetica Neue", Tahoma, Arial, sans-serif;
   font-size: 13px;
   line-height: 1.5;
+  overflow-x: hidden; /* the panel never scrolls horizontally */
 }
 
 /* Arabic body text reads better slightly larger */
@@ -69,7 +70,7 @@ body.rtl { font-size: 13.5px; }
 }
 
 .badge.phase { background: var(--bg-3); color: var(--accent); border: 1px solid var(--line); }
-.badge.mock  { margin: 8px 14px 0; background: rgba(74,144,217,.15); color: var(--accent-2); border: 1px solid var(--accent-2); }
+.badge.mock  { margin: 8px 14px 0; background: rgba(74,144,217,.15); color: var(--accent-2); border: 1px solid var(--accent-2); white-space: normal; max-width: calc(100% - 28px); }
 
 .lang-toggle {
   background: var(--bg-3);
