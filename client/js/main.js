@@ -17,9 +17,34 @@
   var i18n = IMPi18n.createI18n();
   var lastReport = null;
 
-  // ---- locale loading (works under CEP and in a plain browser) ----
+  // ---- locale loading ----
+  // Under CEP the page is served from file://, where relative fetch() fails
+  // silently and the whole UI renders blank. We load via XMLHttpRequest from
+  // an ABSOLUTE file:// URL built from the extension root (encodeURI handles
+  // the space in ".../Application Support/..."). In a plain browser (preview)
+  // we fall back to a relative fetch over http.
   function loadLocale(code) {
-    return fetch('./locale/' + code + '.json').then(function (r) { return r.json(); });
+    if (!IMPBridge.isCEP) {
+      return fetch('./locale/' + code + '.json').then(function (r) { return r.json(); });
+    }
+    return new Promise(function (resolve, reject) {
+      var root = String(IMPBridge.extensionRoot || '').replace(/\\/g, '/');
+      var url = encodeURI('file://' + root + '/client/locale/' + code + '.json');
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState !== 4) { return; }
+        // file:// success reports status 0 in CEF, 200 over http
+        if (xhr.status === 200 || xhr.status === 0) {
+          try { resolve(JSON.parse(xhr.responseText)); }
+          catch (e) { reject('parse ' + code + ' (' + url + '): ' + e); }
+        } else {
+          reject('HTTP ' + xhr.status + ' for ' + url);
+        }
+      };
+      xhr.onerror = function () { reject('XHR error for ' + url); };
+      xhr.send(null);
+    });
   }
 
   function boot() {
@@ -34,7 +59,15 @@
       checkEngine();
       if (params.get('analyze') === '1') { onAnalyze(); }
     }).catch(function (e) {
-      document.getElementById('status').textContent = 'Locale load failed: ' + e;
+      // Never leave the panel blank: show a real, copyable diagnostic.
+      IMPLog.error('locale load failed: ' + e);
+      var status = document.getElementById('status');
+      if (status) { status.textContent = 'Locale load failed — see Copy error log'; }
+      var note = document.getElementById('phaseNote');
+      if (note) { note.textContent = 'تعذّر تحميل ملفات اللغة / Locale load failed: ' + e; }
+      var copyBtn = document.getElementById('btnCopyLog');
+      if (copyBtn) { copyBtn.textContent = 'Copy error log'; }
+      wireEvents();
     });
   }
 

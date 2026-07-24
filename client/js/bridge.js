@@ -11,6 +11,7 @@
 
   var cs = new CSInterface();
   var isCEP = cs.hostAvailable();
+  var extensionRoot = isCEP ? cs.getSystemPath(SystemPath.EXTENSION) : '';
 
   function evalScript(code) {
     return new Promise(function (resolve) {
@@ -70,6 +71,7 @@
 
   global.IMPBridge = {
     isCEP: isCEP,
+    extensionRoot: extensionRoot,
     init: init,
     ping: ping,
     analyzeSelection: analyzeSelection
