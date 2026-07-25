@@ -1,0 +1,36 @@
+{
+  "meaning_confidence": "high",
+  "suggestions": {
+    "corporate": {
+      "title": { "ar": "دوران هادئ", "en": "Calm Turn" },
+      "meaning": { "ar": "ترس ميكانيكي؛ الدلالة الطبيعية هي الدوران حول مركزه.", "en": "A mechanical gear; its natural meaning is rotation about its center." },
+      "parts_motion": [
+        { "part": "gear_body", "motion": "draw_on", "params": { "trim_multiple": "individually" } },
+        { "part": "gear_body", "motion": "gear_rotation", "params": { "degrees": 90, "clockwise": true } }
+      ],
+      "global": { "duration_s": 1.2, "easing": "easy_in_out", "stagger": { "order": "layer_order", "seconds": 0.05 }, "style": "corporate_calm", "loop": false },
+      "explanation": { "ar": "يُرسم الترس ثم يستقر بدوران ربع لفة ناعم — رصين ومناسب للعروض المؤسسية.", "en": "The gear draws on, then settles with a smooth quarter-turn — restrained, fit for corporate decks." }
+    },
+    "educational": {
+      "title": { "ar": "بناء ثم تعشيق", "en": "Build then Engage" },
+      "meaning": { "ar": "إظهار تكوين الترس (السن تلو الآخر) ثم تعشيقه بالدوران يوضّح وظيفته.", "en": "Revealing the gear's teeth one by one, then engaging via rotation, explains how it works." },
+      "parts_motion": [
+        { "part": "teeth", "motion": "sequential_stroke", "params": {} },
+        { "part": "hub", "motion": "scale_fade", "params": { "from_scale": 60 } },
+        { "part": "gear_body", "motion": "gear_rotation", "params": { "degrees": 45, "clockwise": true } }
+      ],
+      "global": { "duration_s": 2.2, "easing": "cubic", "stagger": { "order": "outside_in", "seconds": 0.08 }, "style": "educational_clear", "loop": false },
+      "explanation": { "ar": "تتابع يقرأ بناء الترس بوضوح قبل أن يدور — مثالي للشرح.", "en": "A sequence that reads the gear's construction before it turns — ideal for teaching." }
+    },
+    "dynamic": {
+      "title": { "ar": "قفزة وتعشيق", "en": "Pop and Spin" },
+      "meaning": { "ar": "دخول حيوي: الترس يقفز إلى مكانه ثم يندفع بالدوران.", "en": "An energetic entrance: the gear pops into place then bursts into a spin." },
+      "parts_motion": [
+        { "part": "gear_body", "motion": "elastic_pop", "params": { "overshoot": 0.7 } },
+        { "part": "gear_body", "motion": "rotation_loop", "params": { "rpm": 12, "clockwise": true } }
+      ],
+      "global": { "duration_s": 0.9, "easing": "back", "stagger": { "order": "center_out", "seconds": 0.04 }, "style": "advertising_dynamic", "loop": true },
+      "explanation": { "ar": "قفزة مرنة ثم دوران متواصل — لافت ومناسب للإعلانات.", "en": "An elastic pop then a continuous spin — eye-catching, made for ads." }
+    }
+  }
+}

@@ -11,7 +11,8 @@ var suites = [
   { name: 'i18n', mod: require('./i18n.test.js') },
   { name: 'geometryContract', mod: require('./geometryContract.test.js') },
   { name: 'es3lint', mod: require('./es3lint.test.js') },
-  { name: 'localesSync', mod: require('./localesSync.test.js') }
+  { name: 'localesSync', mod: require('./localesSync.test.js') },
+  { name: 'aiVocabulary', mod: require('./aiVocabulary.test.js') }
 ];
 
 var passed = 0;

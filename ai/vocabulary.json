@@ -1,0 +1,19 @@
+{
+  "_comment": "Controlled motion vocabulary. Smart Motion (AI) MUST choose only from these tokens so every suggestion is executable by the local engine. This is also the intended single source of truth for the engine's animator registry (Phase 3).",
+  "motions": {
+    "draw": ["draw_on", "draw_off", "draw_outline", "trim_reveal", "reverse_draw", "sequential_stroke", "erase_stroke"],
+    "appear": ["elastic_pop", "scale_fade", "mask_reveal", "wipe", "directional_reveal", "center_reveal", "soft_reveal", "bounce_in"],
+    "assemble": ["smart_assemble", "radial_build", "center_out", "outside_in", "assemble_left", "assemble_right", "assemble_top", "assemble_bottom", "scatter_assemble"],
+    "internal": ["rotation", "pulse", "breathing", "float", "wave", "swing", "mechanical_motion", "gear_rotation", "light_glow", "path_follow", "controlled_random"],
+    "exit": ["reverse_build", "fade_out", "collapse", "scatter", "draw_off", "scale_out", "directional_exit"],
+    "loop": ["seamless_loop", "ping_pong", "pulse_loop", "rotation_loop", "float_loop", "hold_repeat", "custom_loop"]
+  },
+  "stagger_orders": ["layer_order", "by_position", "by_size", "rtl", "ltr", "ttb", "btt", "center_out", "outside_in", "random_seeded", "manual"],
+  "easing": ["linear", "easy_in", "easy_out", "easy_in_out", "sine", "cubic", "quart", "quint", "expo", "circ", "back", "elastic", "bounce", "spring", "anticipation", "overshoot", "smooth"],
+  "styles": ["corporate_calm", "educational_clear", "technical_fast", "advertising_dynamic", "friendly_flexible", "cinematic_soft"],
+  "param_ranges": {
+    "duration_s": { "min": 0.3, "max": 6.0 },
+    "stagger_s": { "min": 0.0, "max": 0.5 },
+    "overshoot": { "min": 0.0, "max": 1.0 }
+  }
+}
