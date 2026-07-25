@@ -81,20 +81,15 @@
         }
     }
 
-    function repoRoot() {
-        // host/lib/logger.jsx -> root is three folders up.
-        return new File($.fileName).parent.parent.parent;
-    }
-
     function writeLog(text) {
-        var folder = new Folder(repoRoot().fsName + "/logs");
-        if (!folder.exists) { folder.create(); }
-        var f = new File(folder.fsName + "/inspect.txt");
+        // Write to the Desktop — always writable and easy to find.
+        var f = new File("~/Desktop/icon-motion-inspect.txt");
         f.encoding = "UTF-8";
         if (!f.open("w")) {
-            alert("Could not open log file for writing:\n" + f.fsName +
-                "\n\nEnable Preferences > Scripting & Expressions >" +
-                "\n'Allow Scripts to Write Files and Access Network'.");
+            alert("تعذّرت الكتابة على سطح المكتب.\n\n" +
+                "فعّل أولاً:\nPreferences > Scripting & Expressions >\n" +
+                "'Allow Scripts to Write Files and Access Network'\n" +
+                "ثم أعد تشغيل السكربت.\n\n(Could not write to Desktop — enable file writing.)");
             return null;
         }
         f.write(text);
