@@ -33,6 +33,20 @@ IMP.MN = {
     STROKE_COLOR:     "ADBE Vector Stroke Color",
     STROKE_WIDTH:     "ADBE Vector Stroke Width",
 
+    // Group transform (verified from a real SVG-import inspect)
+    VGROUP_XFORM:     "ADBE Vector Transform Group",
+    VGROUP_ANCHOR:    "ADBE Vector Anchor",
+    VGROUP_POSITION:  "ADBE Vector Position",
+    VGROUP_SCALE:     "ADBE Vector Scale",
+    VGROUP_ROTATION:  "ADBE Vector Rotation",
+    VGROUP_OPACITY:   "ADBE Vector Group Opacity",
+
+    // Stroke caps/joins (verified from inspect)
+    STROKE_OPACITY:   "ADBE Vector Stroke Opacity",
+    STROKE_LINE_CAP:  "ADBE Vector Stroke Line Cap",
+    STROKE_LINE_JOIN: "ADBE Vector Stroke Line Join",
+    STROKE_MITER:     "ADBE Vector Stroke Miter Limit",
+
     // Trim / Merge / Repeater
     TRIM:             "ADBE Vector Filter - Trim",
     TRIM_START:       "ADBE Vector Trim Start",
