@@ -29,7 +29,10 @@
           + '  @ ' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || '?') + '\n';
       }, true);
       window.addEventListener('unhandledrejection', function (e) {
-        banner().textContent += 'PROMISE: ' + (e.reason && e.reason.message ? e.reason.message : e.reason) + '\n';
+        var msg = (e.reason && e.reason.message ? e.reason.message : String(e.reason));
+        // Benign CEF-internal storage attempts in the sandboxed panel — not ours.
+        if (/permission denied|quota|storage|localStorage|IndexedDB/i.test(msg)) { return; }
+        banner().textContent += 'PROMISE: ' + msg + '\n';
       });
       window.addEventListener('load', function () {
         setTimeout(function () {
