@@ -8,6 +8,42 @@
   <link rel="stylesheet" href="./css/rtl.css">
 </head>
 <body class="rtl">
+  <!-- Diagnostic banner: shows any script error on-screen so it can be seen
+       without Chrome remote debugging. Must be the first script so it catches
+       errors thrown by the scripts loaded at the end of the body. -->
+  <script>
+    (function () {
+      function banner() {
+        var d = document.getElementById('bootErr');
+        if (!d) {
+          d = document.createElement('div');
+          d.id = 'bootErr';
+          d.style.cssText = 'position:fixed;top:0;left:0;right:0;max-height:45%;overflow:auto;'
+            + 'background:#7a1f1f;color:#fff;font:11px/1.4 monospace;padding:8px;z-index:99999;white-space:pre-wrap;direction:ltr;text-align:left';
+          (document.body || document.documentElement).appendChild(d);
+        }
+        return d;
+      }
+      window.addEventListener('error', function (e) {
+        banner().textContent += 'ERROR: ' + (e.message || e.type)
+          + '  @ ' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || '?') + '\n';
+      }, true);
+      window.addEventListener('unhandledrejection', function (e) {
+        banner().textContent += 'PROMISE: ' + (e.reason && e.reason.message ? e.reason.message : e.reason) + '\n';
+      });
+      window.addEventListener('load', function () {
+        setTimeout(function () {
+          var loaded = !!(window.IMPLocales && window.IMPLocales.ar);
+          var cep = !!(window.__adobe_cep__);
+          var booted = document.getElementById('appTagline') && document.getElementById('appTagline').textContent.length > 0;
+          if (!booted) {
+            banner().textContent += 'DIAG: IMPLocales=' + loaded + '  __adobe_cep__=' + cep
+              + '  IMPBridge=' + (!!window.IMPBridge) + '  IMPi18n=' + (!!window.IMPi18n) + '\n';
+          }
+        }, 800);
+      });
+    })();
+  </script>
   <header class="topbar">
     <div class="brand">
       <h1 id="appTitle">Icon M Pro</h1>
