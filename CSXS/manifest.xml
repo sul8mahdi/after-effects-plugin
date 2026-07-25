@@ -5,12 +5,12 @@
   which includes After Effects 2026 (26.x). CEP runtime 11.x ships with AE 2026.
 -->
 <ExtensionManifest Version="11.0"
-                   ExtensionBundleId="com.iconmpro.app"
+                   ExtensionBundleId="com.sul8mahdi.iconmpro"
                    ExtensionBundleVersion="0.1.0"
                    ExtensionBundleName="Icon M Pro"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ExtensionList>
-    <Extension Id="com.iconmpro.app.panel" Version="0.1.0"/>
+    <Extension Id="com.sul8mahdi.iconmpro.panel" Version="0.1.0"/>
   </ExtensionList>
 
   <ExecutionEnvironment>
@@ -26,7 +26,7 @@
   </ExecutionEnvironment>
 
   <DispatchInfoList>
-    <Extension Id="com.iconmpro.app.panel">
+    <Extension Id="com.sul8mahdi.iconmpro.panel">
       <DispatchInfo>
         <Resources>
           <MainPath>./client/index.html</MainPath>

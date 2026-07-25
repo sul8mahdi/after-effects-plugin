@@ -7,12 +7,15 @@
  * setLocales(); tests do the same with fs.
  */
 (function (root, factory) {
-  if (typeof module !== 'undefined' && module.exports) {
-    module.exports = factory();
-  } else {
-    root.IMPi18n = factory();
-  }
-})(typeof self !== 'undefined' ? self : this, function () {
+  // CEP runs with Node integration enabled, so `module` exists in the page
+  // context. A plain "if module → CommonJS, else global" UMD would then take
+  // the CommonJS branch and never set window.IMPi18n, leaving the panel unable
+  // to see it (ReferenceError in main.js). So: always set the window/self
+  // global when one exists, AND export for the Node test runner.
+  var api = factory();
+  if (root) { root.IMPi18n = api; }
+  if (typeof module !== 'undefined' && module.exports) { module.exports = api; }
+})(typeof window !== 'undefined' ? window : (typeof self !== 'undefined' ? self : null), function () {
   'use strict';
 
   var DEFAULT_LANG = 'ar';

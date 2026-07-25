@@ -15,8 +15,7 @@
 
 set -euo pipefail
 
-BUNDLE_ID="com.iconmpro.app"
-LEGACY_IDS="com.iconmotion.pro"   # older ids to remove so they can't shadow us
+BUNDLE_ID="com.sul8mahdi.iconmpro"
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 EXT_DIR="$HOME/Library/Application Support/Adobe/CEP/extensions"
 LINK_PATH="$EXT_DIR/$BUNDLE_ID"
@@ -24,13 +23,8 @@ LINK_PATH="$EXT_DIR/$BUNDLE_ID"
 echo "Icon M Pro — تثبيت تطويري على macOS"
 echo "Repo: $REPO_ROOT"
 
-# 0) Remove any older-named copies so CEP can't load a stale one by mistake.
-for OLD in $LEGACY_IDS; do
-  if [ -e "$EXT_DIR/$OLD" ] || [ -L "$EXT_DIR/$OLD" ]; then
-    rm -rf "$EXT_DIR/$OLD"
-    echo "✓ أُزيلت نسخة قديمة: $OLD"
-  fi
-done
+# SAFETY: this installer manages ONLY its own folder ($LINK_PATH). It never
+# deletes or touches any other extension — your other tools stay untouched.
 
 # 1) Enable debug mode for the CSXS versions AE 2024..2026 may use.
 #    (Unsigned extensions only load when PlayerDebugMode = 1.)
