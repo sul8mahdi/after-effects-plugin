@@ -1,0 +1,16 @@
+{
+  "_note": "Abstract icon report fed to Smart Motion. Part labels are a Phase-3 enrichment (the Phase-1 analyzer emits counts, not named parts); included here to exercise the grounding check.",
+  "type": "ShapeLayer",
+  "supported": true,
+  "counts": { "groups": 4, "paths": 4, "pathsOpen": 3, "pathsClosed": 1, "pathsEmpty": 0, "fills": 1, "strokes": 3 },
+  "colors": ["#2b6cff", "#c9dcff"],
+  "strokeWidths": [6],
+  "complexity": "simple",
+  "symmetry": "vertical",
+  "parts": [
+    { "id": "arc_outer", "role": "stroke_arc", "order": 3, "y": "top" },
+    { "id": "arc_mid",   "role": "stroke_arc", "order": 2, "y": "middle" },
+    { "id": "arc_inner", "role": "stroke_arc", "order": 1, "y": "lower" },
+    { "id": "dot",       "role": "fill_dot",   "order": 0, "y": "bottom" }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "_note": "Produced by following smart-motion.system.md as the model (no live API key in the build sandbox). Validated against schema + vocabulary + input parts by ai/validate.mjs.",
+  "meaning_confidence": "high",
+  "suggestions": {
+    "corporate": {
+      "title": { "ar": "إشارة تتصل", "en": "Signal Connects" },
+      "meaning": { "ar": "رمز واي‑فاي: نقطة يصدر عنها قوسان فأكثر — الدلالة هي إشارة تنتشر من المصدر.", "en": "A Wi‑Fi glyph: a dot emitting arcs — its meaning is a signal radiating from a source." },
+      "parts_motion": [
+        { "part": "dot", "motion": "scale_fade", "params": { "from_scale": 60 } },
+        { "part": "arc_inner", "motion": "draw_on", "params": {} },
+        { "part": "arc_mid", "motion": "draw_on", "params": {} },
+        { "part": "arc_outer", "motion": "draw_on", "params": {} }
+      ],
+      "global": { "duration_s": 1.4, "easing": "easy_in_out", "stagger": { "order": "center_out", "seconds": 0.08 }, "style": "corporate_calm", "loop": false },
+      "explanation": { "ar": "تظهر النقطة ثم تُرسم الأقواس من الداخل للخارج بهدوء — رصين ومناسب للعروض المؤسسية.", "en": "The dot appears, then arcs draw from inner to outer — restrained, fit for corporate decks." }
+    },
+    "educational": {
+      "title": { "ar": "انتشار الإشارة", "en": "Signal Propagation" },
+      "meaning": { "ar": "إظهار المصدر ثم انتشار الأقواس تباعاً من الأسفل للأعلى يوضّح كيف تنتشر الإشارة.", "en": "Revealing the source then propagating the arcs upward, one by one, shows how the signal spreads." },
+      "parts_motion": [
+        { "part": "dot", "motion": "scale_fade", "params": { "from_scale": 40 } },
+        { "part": "arc_inner", "motion": "sequential_stroke", "params": {} },
+        { "part": "arc_mid", "motion": "sequential_stroke", "params": {} },
+        { "part": "arc_outer", "motion": "sequential_stroke", "params": {} }
+      ],
+      "global": { "duration_s": 2.4, "easing": "cubic", "stagger": { "order": "btt", "seconds": 0.12 }, "style": "educational_clear", "loop": false },
+      "explanation": { "ar": "تتابع من المصدر إلى الخارج يقرأ انتشار الإشارة بوضوح — مثالي للشرح.", "en": "A source‑to‑edge sequence that reads the signal spreading clearly — ideal for teaching." }
+    },
+    "dynamic": {
+      "title": { "ar": "بث نابض", "en": "Pulsing Broadcast" },
+      "meaning": { "ar": "دخول حيوي: النقطة تقفز ثم تنبض الأقواس باستمرار كإشارة تبثّ.", "en": "An energetic entrance: the dot pops, then the arcs pulse continuously like a broadcasting signal." },
+      "parts_motion": [
+        { "part": "dot", "motion": "elastic_pop", "params": { "overshoot": 0.6 } },
+        { "part": "arc_inner", "motion": "pulse_loop", "params": { "period_s": 1.2 } },
+        { "part": "arc_mid", "motion": "pulse_loop", "params": { "period_s": 1.2 } },
+        { "part": "arc_outer", "motion": "pulse_loop", "params": { "period_s": 1.2 } }
+      ],
+      "global": { "duration_s": 1.0, "easing": "back", "stagger": { "order": "center_out", "seconds": 0.05 }, "style": "advertising_dynamic", "loop": true },
+      "explanation": { "ar": "قفزة مرنة ثم نبض متتابع للأقواس — لافت ومناسب للإعلانات.", "en": "An elastic pop then a staggered pulse across the arcs — eye‑catching, made for ads." }
+    }
+  }
+}

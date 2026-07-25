@@ -33,6 +33,18 @@
 الافتراضي في هذه البيئة هو Claude (نستخدم إخراجاً منظَّماً/أداة لضمان مطابقة
 المخطط)، لكن استبداله لا يمسّ بقية الأداة.
 
+## تجربتها فعلياً (بمفتاحك)
+
+```bash
+npm i @anthropic-ai/sdk
+export ANTHROPIC_API_KEY=sk-ant-...      # أو: ant auth login
+node ai/try-smart-motion.mjs ai/examples/wifi.input.json
+```
+
+المحوّل يجمّع البرومبت + المفردات + تقرير الأيقونة، يستدعي `claude-opus-5` بإخراج
+منظَّم، ثم **يتحقق** من الرد مقابل المخطط والمفردات وأجزاء الأيقونة قبل عرضه.
+مثال مُتحقَّق منه بالفعل: `ai/examples/wifi.output.json` (نجح في `node tests/run.js`).
+
 ## الملفات
 - `prompts/smart-motion.system.md` — تعليمات النظام (الدور، القواعد، الخصوصية، صيغة الإخراج).
 - `prompts/smart-motion.user.md` — قالب رسالة المستخدم بعناصر `{{...}}` يملؤها المحول.
